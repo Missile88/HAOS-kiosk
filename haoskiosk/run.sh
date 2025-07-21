@@ -146,6 +146,20 @@ if ! kill -0 "$O_PID" 2>/dev/null; then #Checks if process alive
 fi
 bashio::log.info "Openbox started successfully..."
 
+### Configure screen timeout (Note: DPMS needs to be enabled/disabled *after* starting Openbox)
+if [ "$SCREEN_TIMEOUT" -eq 0 ]; then #Disable screen saver and DPMS for no timeout
+    xset s 0
+    xset dpms 0 0 0
+    xset -dpms
+    bashio::log.info "Screen timeout disabled..."
+else
+    sleep 1
+    xset s "$SCREEN_TIMEOUT"
+    xset dpms "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT"  #DPMS standby, suspend, off
+    xset +dpms
+    bashio::log.info "Screen timeout after $SCREEN_TIMEOUT seconds..."
+fi
+
 # Poll to send <Control-r> when screen unblanks to force reload of luakit page
 (
     PREV=""
@@ -161,28 +175,10 @@ bashio::log.info "Openbox started successfully..."
 
 echo "DEBUG_MODE=$DEBUG_MODE" #JJKCRAP
 if [ "$DEBUG_MODE" != true ]; then
+    ### Run Luakit in the foreground
     bashio::log.info "Launching Luakit browser..."
-    luakit -U "$HA_URL/$HA_DASHBOARD" &
-
-    # Add small delay to ensure X shows something
-    sleep 1
-
-    # Configure screen timeout
-    if [ "$SCREEN_TIMEOUT" -eq 0 ]; then
-        xset s 0
-        xset dpms 0 0 0
-        xset -dpms
-        bashio::log.info "Screen timeout disabled..."
-    else
-        xset s "$SCREEN_TIMEOUT"
-        xset dpms "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT" "$SCREEN_TIMEOUT"
-        xset +dpms
-        bashio::log.info "Screen timeout after $SCREEN_TIMEOUT seconds..."
-    fi
-
-    wait  # Wait on luakit to keep container running
-else
-    # DEBUG MODE — skip luakit
+    exec luakit -U "$HA_URL/$HA_DASHBOARD"
+else ### Debug mode
     bashio::log.info "Entering debug mode (X & Openbox but no luakit browser)..."
     exec sleep infinite
 fi
