@@ -1,4 +1,4 @@
-# HAOS-kiosk
+# HAOS-kiosk missile
 
 Display HA dashboards in kiosk mode directly on your HAOS server.
 
