@@ -57,7 +57,13 @@ local ha_url_base = ha_url:match("^(https?://[%w%.%-%%:]+)") or ha_url
 ha_url_base = string.gsub(ha_url_base, "/+$", "") -- Strip trailing '/'
 
 local raw_theme = os.getenv("HA_THEME") or defaults.HA_THEME -- Valid entries: auto, dark, light, none (or "")
-local valid_themes = { auto = '{}', dark = '{"dark":true}', light = '{"dark":false}', none = '', [""] = ''}
+local valid_themes = {
+    auto = 'auto',
+    dark = 'dark',
+    light = 'light',
+    none = '',
+    [""] = ''
+}
 local theme = valid_themes[raw_theme]
 if theme == nil then
     msg.warn("Invalid HA_THEME value: '%s'; defaulting to unset", raw_theme)
