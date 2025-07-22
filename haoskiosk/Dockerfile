@@ -15,6 +15,7 @@ RUN apk update && apk add --no-cache \
     xf86-video-fbdev \
     xf86-input-evdev \
     openbox \
+    xbacklight \
     ttf-dejavu \
     util-linux \
     xset \
