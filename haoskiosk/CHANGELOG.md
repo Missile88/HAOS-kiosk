@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.9.15 - July 2025
+
+- Fixed issue where screen timeout can cause blank display
+- Added screen brightness config
+- 
+
 ## v0.9.9 - July 2025
 
 - Removed remounting of /dev/ ro (which caused HAOS updates to fail)
