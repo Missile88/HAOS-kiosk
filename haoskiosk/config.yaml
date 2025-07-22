@@ -36,6 +36,7 @@ options:
   ha_theme: "dark"
   ha_sidebar: "none"
   debug_mode: false
+  brightness: 50
 
 schema:
   ha_username: str
@@ -50,6 +51,7 @@ schema:
   ha_theme: list(auto|dark|light|none)
   ha_sidebar: list(full|narrow|none)
   debug_mode: bool
+  brightness: int(10,100)
 
 translations:
   - en
