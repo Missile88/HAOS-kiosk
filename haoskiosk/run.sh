@@ -73,6 +73,7 @@ get_config HDMI_PORT 0 # Default to 0
 #      Not sure how to get them unmirrored so that console can be on /dev/fb0 and X on /dev/fb1
 #      As a result, setting HDMI=0 vs. 1 has no effect
 get_config DEBUG_MODE false
+get_config BRIGHTNESS 50 # set brightness to half be default
 
 #Validate environment variables set by config.yaml
 if [ -z "$HA_USERNAME" ] || [ -z "$HA_PASSWORD" ]; then
@@ -166,6 +167,9 @@ if [ "$DEBUG_MODE" != true ]; then
 
     # Add small delay to ensure X shows something
     sleep 1
+
+    # Set screen brightness in percent 
+    xbacklight -set "$BRIGHTNESS"
 
     # Configure screen timeout
     if [ "$SCREEN_TIMEOUT" -eq 0 ]; then
