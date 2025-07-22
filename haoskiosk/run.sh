@@ -169,7 +169,7 @@ if [ "$DEBUG_MODE" != true ]; then
     sleep 1
 
     # Set screen brightness in percent 
-    xbacklight -set "$BRIGHTNESS"
+    #xbacklight -set "$BRIGHTNESS"
 
     # Configure screen timeout
     if [ "$SCREEN_TIMEOUT" -eq 0 ]; then
